@@ -28,8 +28,8 @@ const passwordRef = ref(null);
 const isRegistering = ref(false);
 
 const handleLogin = () => {
-  const username = usernameRef.value?.getValue();
-  const password = passwordRef.value?.getValue();
+  const username = usernameRef.valueOf().value.getValue();
+  const password = passwordRef.valueOf().value.getValue();
 
   if (!username || !password) {
     alert("请输入用户名和密码！");
