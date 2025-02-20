@@ -31,3 +31,4 @@ coverage
 # .vite
 frontend/komeiji/.vite/deps/
 frontend/komeiji/.vscode/settings.json
+frontend/komeiji/.idea/
