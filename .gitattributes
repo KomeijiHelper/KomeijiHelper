@@ -45,3 +45,5 @@
 # 设置 Windows 专用的批处理文件换行符为 CRLF
 *.bat text eol=crlf
 *.cmd text eol=crlf
+
+/mvnw text eol=lf
