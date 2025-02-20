@@ -23,12 +23,8 @@ const inputValue = ref("");
 const position = reactive({ x: props.x, y: props.y });
 
 const getValue = () => inputValue.value;
-const setPosition = (x, y) => {
-  position.x = x;
-  position.y = y;
-};
 
-defineExpose({ getValue, setPosition });
+defineExpose({ getValue });
 </script>
 
 <style scoped>
