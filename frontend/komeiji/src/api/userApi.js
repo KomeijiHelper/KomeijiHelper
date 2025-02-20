@@ -13,6 +13,10 @@ export default {
         return apiClient.post('login', username, password);
     },
 
+    register(username, password) {
+        return apiClient.post('register', username, password);
+    },
+
     getUsers() {
         return apiClient.get('/users');
     },
