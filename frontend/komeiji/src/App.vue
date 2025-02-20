@@ -10,6 +10,11 @@
 
     <!-- 登录按钮 -->
     <button class="login-button" @click="handleLogin">登录</button>
+
+    <label>
+      <input type="checkbox" v-model="isRegistering" />
+      {{ "注册" }}
+    </label>
   </div>
 </template>
 
@@ -20,6 +25,7 @@ import userApi from "@/api/userApi.js";
 
 const usernameRef = ref(null);
 const passwordRef = ref(null);
+const isRegistering = ref(false);
 
 const handleLogin = () => {
   const username = usernameRef.value?.getValue();
@@ -30,9 +36,15 @@ const handleLogin = () => {
     return;
   }
 
-  userApi.login(username, password).then((res) => {
-    console.log(res);
-  })
+  if (isRegistering) {
+    userApi.register(username, password).then((res) => {
+      alert(res);
+    })
+  } else {
+    userApi.login(username, password).then((res) => {
+      alert(res);
+    })
+  }
 
   alert(`登录成功！用户名：${username}`);
 };
