@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3800e09f-2fe3-4fac-91bb-2d5af2450ebf" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/komeiji.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-    </list>
+    <list default="true" id="3800e09f-2fe3-4fac-91bb-2d5af2450ebf" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,6 +89,7 @@
       <workItem from="1740016712085" duration="1146000" />
       <workItem from="1740018467884" duration="1216000" />
       <workItem from="1740037185141" duration="490000" />
+      <workItem from="1740037795130" duration="38000" />
     </task>
     <servers />
   </component>
