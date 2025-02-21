@@ -9,6 +9,8 @@ lerna-debug.log*
 
 # Dependencies
 node_modules/
+frontend/komeiji/.vite/deps/
+.idea/
 
 # Build output
 dist/
@@ -61,3 +63,6 @@ target/
 /build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+
+# vscode
+.vscode/
