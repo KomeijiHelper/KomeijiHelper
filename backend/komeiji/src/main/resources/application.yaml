@@ -1,5 +1,10 @@
 server:
   port: 8081
+  servlet:
+    session:
+      cookie:
+        secure: true
+        SameSite: None
 spring:
   application:
     name: back
