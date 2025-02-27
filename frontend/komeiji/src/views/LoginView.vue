@@ -34,17 +34,14 @@ const handleLogin = () => {
     return;
   }
 
-  if (isRegistering) {
+  if (isRegistering.value) {
     userApi.register(username, password).then((res) => {
-      alert(res);
     })
   } else {
     userApi.login(username, password).then((res) => {
-      alert(res);
     })
   }
 
-  alert(`登录成功！用户名：${username}`);
   router.push("about")
 };
 </script>
