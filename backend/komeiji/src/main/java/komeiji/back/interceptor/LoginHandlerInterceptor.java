@@ -2,11 +2,8 @@ package komeiji.back.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.List;
 
 
 public class LoginHandlerInterceptor implements HandlerInterceptor {
