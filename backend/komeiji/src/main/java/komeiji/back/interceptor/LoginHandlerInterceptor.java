@@ -13,16 +13,8 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //登陆成功之后应该有用户的session
-        HttpSession session = request.getSession();
-        Enumeration<String> sessionAttributes = session.getAttributeNames();
-        while (sessionAttributes.hasMoreElements()) {
-            String attributeName = sessionAttributes.nextElement();
-            Object attributeValue = session.getAttribute(attributeName);
+        Object session = request.getSession().getAttribute("LoginUser");
 
-            // 打印属性名称和值
-            System.out.println(attributeName + ": " + attributeValue);
-        }
-        System.out.println(session.getId());
         if (session == null) {  //没有登陆
             //重置response
             response.reset();
