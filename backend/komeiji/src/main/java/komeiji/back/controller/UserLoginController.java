@@ -3,13 +3,14 @@ package komeiji.back.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
 import komeiji.back.service.UserLoginService;
 import komeiji.back.entity.User;
 import org.springframework.web.bind.annotation.*;
 import komeiji.back.utils.Result;
 
 import jakarta.annotation.Resource;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
@@ -50,4 +51,13 @@ public class UserLoginController {
 
     @GetMapping("/test")
     public String test() { return "test"; }
+
+    @GetMapping("/getUserName")
+    public Result<String> getUserName(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Object userName = session.getAttribute("LoginUser");
+        User user = userLoginService.getUserByName(userName.toString());
+        return user == null
+                ? Result.error(401, "User Not Found", response)
+                : Result.success(user.getUname(), "成功");
+    }
 }

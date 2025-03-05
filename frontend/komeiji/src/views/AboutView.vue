@@ -10,6 +10,8 @@ const handleButtonClick = async () => {
     console.error('Error calling test API:', error); // 处理错误
   }
 };
+
+userApi.getUserName();
 </script>
 
 <template>

@@ -5,5 +5,5 @@ public interface UserLoginService {
 
     User loginService(String uname ,String password);
     User registerService(User user);
-
+    User getUserByName(String uname);
 }

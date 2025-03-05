@@ -31,4 +31,9 @@ public class UserLoginServiceImpl implements UserLoginService{
             return newuser;
         }
     }
+
+    @Override
+    public User getUserByName(String uname) {
+        return userDao.findByUname(uname);
+    }
 }

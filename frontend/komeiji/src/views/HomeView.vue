@@ -1,5 +1,7 @@
 <script setup>
+import userApi from "@/api/userApi.js";
 
+userApi.getUserName();
 </script>
 
 <template>

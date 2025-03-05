@@ -1,5 +1,9 @@
 package komeiji.back.utils;
 
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
 public class Result<T> {
     private String code;
     private String msg;
@@ -58,12 +62,17 @@ public class Result<T> {
         return result;
     }
 
-    public static Result error(String code, String msg) {
-        Result result = new Result();
+    public static <T> Result<T> error(String code, String msg) {
+        Result<T> result = new Result<>();
         result.setCode(code);
         result.setMsg(msg);
         return result;
     }
 
-
+    public static <T> Result<T> error(int code, String msg, HttpServletResponse response) throws IOException {
+        Result<T> result = new Result<>();
+        response.setStatus(code);
+        result.setMsg(msg);
+        return result;
+    }
 }
