@@ -7,6 +7,7 @@ const apiClient = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+    withCredentials: true,
 });
 
 apiClient.interceptors.response.use((response) => {
@@ -14,25 +15,27 @@ apiClient.interceptors.response.use((response) => {
 }, async (error) => {
     if (error.response) {
         if (error.response.status === 401) {
-            console.log('Session 失效，跳转到登录页');
-            localStorage.removeItem('session'); // 清除 session
-            await router.push('/login'); // 跳转到登录页
-        } else if (error.response.status === 403) {
-            console.log('无权限访问');
+            alert('会话失效，跳转到登录页');
+            localStorage.removeItem('session');
+            await router.push('/login');
+        }
+        else if (error.response.status === 402) {
+            alert("用户名或密码错误");
+        }
+        else if (error.response.status === 403) {
+            await router.back();
         }
     }
     return Promise.reject(error);
 });
 
 export default {
-    login(username, password) {
+    async login(username, password) {
         const postJson = {
             uname: username,
             password: password,
         };
-        const result = apiClient.post('/user/login', postJson, {withCredentials: true});
-        result.then((response) => {console.log(response)})
-        return result;
+        return apiClient.post('/user/login', postJson);
     },
 
     register(username, password) {
@@ -40,17 +43,15 @@ export default {
             uname: username,
             password: password,
         };
-        const result = apiClient.post('/user/register', postJson);
-        result.then((response) => {console.log(response)})
-        return result;
+        return apiClient.post('/user/register', postJson);
     },
 
     getUserName(){
-        return apiClient.get('/user/getUserName', {withCredentials: true});
+        return apiClient.get('/user/getUserName');
     },
 
     test(){
-        const testres = apiClient.get('/user/test', {withCredentials: true});
+        const testres = apiClient.get('/user/test');
         testres.then((response) => {console.log(response)})
         return testres;
     },

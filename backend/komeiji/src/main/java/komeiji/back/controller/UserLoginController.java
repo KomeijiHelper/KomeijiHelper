@@ -19,7 +19,7 @@ public class UserLoginController {
     private UserLoginService userLoginService;
 
     @PostMapping("/login")
-    public Result<User> loginController(@RequestBody User loginuser, HttpServletRequest request, HttpServletResponse response) {
+    public Result<User> loginController(@RequestBody User loginuser, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         User user = userLoginService.loginService(loginuser.getUname(), loginuser.getPassword());
 
@@ -29,7 +29,7 @@ public class UserLoginController {
             return Result.success(user, "登录成功");
         }
         else{
-            return Result.error("400","账号或密码错误");
+            return Result.error(402,"账号或密码错误", response);
         }
     }
 

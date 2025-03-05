@@ -25,7 +25,7 @@ const usernameRef = ref(null);
 const passwordRef = ref(null);
 const isRegistering = ref(false);
 
-const handleLogin = () => {
+const handleLogin = async () => {
   const username = usernameRef.valueOf().value.getValue();
   const password = passwordRef.valueOf().value.getValue();
 
@@ -35,14 +35,12 @@ const handleLogin = () => {
   }
 
   if (isRegistering.value) {
-    userApi.register(username, password).then((res) => {
-    })
+    await userApi.register(username, password)
   } else {
-    userApi.login(username, password).then((res) => {
-    })
+    await userApi.login(username, password)
   }
 
-  router.push("about")
+  await router.push("/");
 };
 </script>
 
