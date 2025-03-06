@@ -38,6 +38,14 @@ public class User {
         this.password = password;
     }
 
+    public UserClass getUserClass() {
+        return userClass;
+    }
+
+    public void setUserClass(UserClass userClass) {
+        this.userClass = userClass;
+    }
+
     public String getEmail() {
         return email;
     }

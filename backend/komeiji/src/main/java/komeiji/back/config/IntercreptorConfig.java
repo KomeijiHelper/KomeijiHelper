@@ -19,7 +19,4 @@ public class IntercreptorConfig implements WebMvcConfigurer {
         excludeUrls.add("/**/register");
         registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns(excludeUrls);
     }
-
-
-
 }
