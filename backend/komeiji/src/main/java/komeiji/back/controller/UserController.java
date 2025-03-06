@@ -79,4 +79,9 @@ public class UserController {
     public static class UserClassRequest {
         private int userClassCode;
     }
+
+    @GetMapping("/checkSession")
+    public Boolean checkSession() {
+        return true;
+    }
 }

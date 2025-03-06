@@ -7,6 +7,46 @@
   <router-view></router-view>
 </template>
 
+<script setup>
+
+import {onMounted, onUnmounted, ref, watch} from "vue";
+import userApi from "@/api/userApi.js";
+import {useRoute} from "vue-router";
+
+// 初始化对路径变化的监听, 用于更新校验 session
+const route = useRoute();
+watch(() => route.path, (newPath, oldPath) => {
+  // 如果前往登录页面, 则不 check session
+  if (newPath === '/login') { return }
+  handleRouteChange();
+});
+function handleRouteChange() {
+  try {
+    userApi.checkSession()
+    loggedIn = true
+  } catch (e) {
+    loggedIn = false
+  }
+}
+
+// 初始化对用户名的监听, 用于绘制AppBar
+let loggedIn = false;
+localStorage.setItem('userName', '');
+const userName = ref(localStorage.getItem('userName') || '');
+const updateFromStorage = (event) => {
+  if (event.key === 'userName') {
+    userName.value = event.newValue || '';
+  }
+};
+onMounted(() => {
+  window.addEventListener('storage', updateFromStorage);
+});
+onUnmounted(() => {
+  window.removeEventListener('storage', updateFromStorage);
+});
+
+</script>
+
 <style scoped>
 .navbar {
   background-color: #333;

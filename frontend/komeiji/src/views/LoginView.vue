@@ -39,7 +39,6 @@ const handleLogin = async () => {
   } else {
     await userApi.login(username, password)
   }
-
   await router.push("/about");
 };
 </script>
