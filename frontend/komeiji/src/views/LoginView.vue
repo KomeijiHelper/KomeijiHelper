@@ -40,7 +40,7 @@ const handleLogin = async () => {
     await userApi.login(username, password)
   }
 
-  await router.push("/");
+  await router.push("/about");
 };
 </script>
 

@@ -1,22 +1,27 @@
 <script setup>
-import userApi from '@/api/userApi'; // 假设你有一个 userApi.js 文件
+import userApi from '@/api/userApi';
+import {onMounted, ref} from "vue"; // 假设你有一个 userApi.js 文件
 
 // 定义一个方法来处理点击事件
 const handleButtonClick = async () => {
   try {
-    const response = await userApi.test(); // 调用 userApi.test 方法
-    console.log(response); // 处理返回的响应
+    const response = await userApi.getUsersByUserClass(0); // 调用 userApi.test 方法
+    console.log(response);
   } catch (error) {
     console.error('Error calling test API:', error); // 处理错误
   }
 };
 
-userApi.getUserName();
+const userId = ref('')
+onMounted(async () => {
+  userId.value = await userApi.getUserName()
+});
+
 </script>
 
 <template>
   <div>
-    <h1>About</h1>
+    <h1>About {{userId}}</h1>
     <button @click="handleButtonClick">Call API</button> <!-- 添加按钮并绑定点击事件 -->
   </div>
 </template>

@@ -59,14 +59,26 @@ export default {
         return apiClient.post('/user/register', postJson);
     },
 
-    getUserName(){
-        return apiClient.get('/user/getUserName');
+    async getUserName() {
+        const result = apiClient.get('/user/getUserName');
+        let userName = '';
+        await result.then((response) => {
+            userName = response.data.data;
+        });
+        return userName;
     },
 
     test(){
         const testres = apiClient.get('/user/test');
         testres.then((response) => {console.log(response)})
         return testres;
+    },
+
+    getUsersByUserClass(userClassCode) {
+        const postJson = {
+            userClassCode: userClassCode,
+        };
+        return apiClient.post('/user/getUsersByClass', postJson);
     },
 
     getUsers() {
