@@ -12,6 +12,15 @@ const handleButtonClick = async () => {
   }
 };
 
+const handleButtonClick1 = async () => {
+  try {
+    const response = await userApi.test(); // 调用 userApi.test 方法
+    console.log(response);
+  } catch (error) {
+    console.error('Error calling test API:', error); // 处理错误
+  }
+};
+
 const userId = ref('')
 onMounted(async () => {
   userId.value = await userApi.getUserName()
@@ -23,6 +32,7 @@ onMounted(async () => {
   <div>
     <h1>About {{userId}}</h1>
     <button @click="handleButtonClick">Call API</button> <!-- 添加按钮并绑定点击事件 -->
+    <button @click="handleButtonClick1">Call Test</button>
   </div>
 </template>
 

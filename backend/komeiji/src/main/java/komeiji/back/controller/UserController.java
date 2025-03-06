@@ -13,6 +13,7 @@ import jakarta.annotation.Resource;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -64,12 +65,15 @@ public class UserController {
     }
 
     @PostMapping("/getUsersByClass")
-    public Result<List<User>> getUsersByClass(@RequestBody UserClassRequest userClassRequest, HttpServletResponse response) throws IOException {
+    public Result<List<String>> getUsersByClass(@RequestBody UserClassRequest userClassRequest, HttpServletResponse response) throws IOException {
         UserClass userClass = UserClass.fromCode(userClassRequest.userClassCode);
         List<User> users = userService.getUsersByUserClass(userClass);
-        return users == null || users.isEmpty()
+        List<String> names = users.stream()
+                .map(User::getUserName)
+                .toList();
+        return users.isEmpty()
                 ? Result.error(401, "User Not Found", response)
-                : Result.success(users);
+                : Result.success(names);
     }
 
     public static class UserClassRequest {
