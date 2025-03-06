@@ -9,9 +9,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String uname;
+    private String userName;
     private String password;
-
+    private UserClass userClass = UserClass.Normal;
     private String email;
 
     public long getId() {
@@ -22,12 +22,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUname() {
-        return uname;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
+    public void setUserName(String uname) {
+        this.userName = uname;
     }
 
     public String getPassword() {

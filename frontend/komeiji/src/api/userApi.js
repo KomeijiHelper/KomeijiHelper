@@ -25,6 +25,9 @@ apiClient.interceptors.response.use((response) => {
         else if (error.response.status === 403) {
             await router.back();
         }
+        else if (error.response.status === 456) {
+            alert("注册失败");
+        }
     }
     return Promise.reject(error);
 });
@@ -32,7 +35,7 @@ apiClient.interceptors.response.use((response) => {
 export default {
     async login(username, password) {
         const postJson = {
-            uname: username,
+            userName: username,
             password: password,
         };
         return apiClient.post('/user/login', postJson);
@@ -40,7 +43,7 @@ export default {
 
     register(username, password) {
         const postJson = {
-            uname: username,
+            userName: username,
             password: password,
         };
         return apiClient.post('/user/register', postJson);

@@ -14,26 +14,25 @@ public class UserLoginServiceImpl implements UserLoginService{
 
 
     @Override
-    public User loginService(String uname, String password) {
-        User user = userDao.findByUnameAndPassword(uname, password);
-        if(user != null){ user.setPassword("");}
-        return user;
+    public Boolean loginService(String userName, String password) {
+        User user = userDao.findByUserNameAndPassword(userName, password);
+        return user != null;
     }
 
     @Override
-    public User registerService(User user) {
-        if(userDao.findByUname(user.getUname()) != null){
-            return null; //用户名重复
+    public Boolean registerService(User user) {
+        if(userDao.findByUserName(user.getUserName()) != null){
+            //用户名重复
+            return false;
         }
         else {
-            User newuser = userDao.save(user);
-            if(newuser != null){ newuser.setPassword(""); }
-            return newuser;
+            userDao.save(user);
+            return true;
         }
     }
 
     @Override
-    public User getUserByName(String uname) {
-        return userDao.findByUname(uname);
+    public User getUserByName(String userName) {
+        return userDao.findByUserName(userName);
     }
 }

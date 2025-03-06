@@ -19,14 +19,14 @@ public class UserLoginController {
     private UserLoginService userLoginService;
 
     @PostMapping("/login")
-    public Result<User> loginController(@RequestBody User loginuser, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Result<String> loginController(@RequestBody User loginUser, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        User user = userLoginService.loginService(loginuser.getUname(), loginuser.getPassword());
+        Boolean loginResult = userLoginService.loginService(loginUser.getUserName(), loginUser.getPassword());
 
-        if(user != null){
+        if(loginResult){
             HttpSession session = request.getSession();
-            session.setAttribute("LoginUser", loginuser.getUname());
-            return Result.success(user, "登录成功");
+            session.setAttribute("LoginUser", loginUser.getUserName());
+            return Result.success(loginUser.getUserName(), "登录成功");
         }
         else{
             return Result.error(402,"账号或密码错误", response);
@@ -34,12 +34,14 @@ public class UserLoginController {
     }
 
     @PostMapping("/register")
-    public Result<User> registerController(@RequestBody User newUser) {
-        User user = userLoginService.registerService(newUser);
-        if (user != null) {
-            return Result.success(user, "注册成功");
+    public Result<String> registerController(@RequestBody User newUser, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Boolean registerResult = userLoginService.registerService(newUser);
+        if (registerResult) {
+            HttpSession session = request.getSession();
+            session.setAttribute("LoginUser", newUser.getUserName());
+            return Result.success(newUser.getUserName(), "注册成功");
         } else {
-            return Result.error("456", "注册失败");
+            return Result.error(456, "注册失败", response);
         }
     }
 
@@ -58,6 +60,6 @@ public class UserLoginController {
         User user = userLoginService.getUserByName(userName.toString());
         return user == null
                 ? Result.error(401, "User Not Found", response)
-                : Result.success(user.getUname(), "成功");
+                : Result.success(user.getUserName(), "成功");
     }
 }
