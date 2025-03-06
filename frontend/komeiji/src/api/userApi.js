@@ -69,9 +69,7 @@ export default {
     },
 
     test(){
-        const testres = apiClient.get('/user/test');
-        testres.then((response) => {console.log(response)})
-        return testres;
+        return apiClient.get('/user/test');
     },
 
     getUsersByUserClass(userClassCode) {
