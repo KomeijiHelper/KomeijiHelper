@@ -14,19 +14,29 @@ apiClient.interceptors.response.use((response) => {
     return response;
 }, async (error) => {
     if (error.response) {
-        if (error.response.status === 401) {
-            alert('会话失效，跳转到登录页');
-            localStorage.removeItem('session');
-            await router.push('/login');
-        }
-        else if (error.response.status === 402) {
-            alert("用户名或密码错误");
-        }
-        else if (error.response.status === 403) {
-            await router.back();
-        }
-        else if (error.response.status === 456) {
-            alert("注册失败");
+        switch (error.response.status) {
+            case 401:
+            {
+                alert('会话失效，跳转到登录页');
+                localStorage.removeItem('session');
+                await router.push('/login');
+                break;
+            }
+            case 402:
+            {
+                alert("用户名或密码错误");
+                break;
+            }
+            case 403:
+            {
+                await router.back();
+                break;
+            }
+            case 456:
+            {
+                alert("注册失败");
+                break;
+            }
         }
     }
     return Promise.reject(error);

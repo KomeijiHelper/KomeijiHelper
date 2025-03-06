@@ -1,17 +1,19 @@
 package komeiji.back.service.Impl;
 
-import komeiji.back.service.UserLoginService;
+import komeiji.back.entity.UserClass;
+import komeiji.back.service.UserService;
 import komeiji.back.repository.UserDao;
 import komeiji.back.entity.User;
 
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserLoginServiceImpl implements UserLoginService{
+public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
-
 
     @Override
     public Boolean loginService(String userName, String password) {
@@ -34,5 +36,10 @@ public class UserLoginServiceImpl implements UserLoginService{
     @Override
     public User getUserByName(String userName) {
         return userDao.findByUserName(userName);
+    }
+
+    @Override
+    public List<User> getUsersByUserClass(UserClass userClass) {
+        return userDao.findUsersByUserClass(userClass);
     }
 }

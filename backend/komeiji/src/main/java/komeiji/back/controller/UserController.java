@@ -3,7 +3,7 @@ package komeiji.back.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import komeiji.back.service.UserLoginService;
+import komeiji.back.service.UserService;
 import komeiji.back.entity.User;
 import org.springframework.web.bind.annotation.*;
 import komeiji.back.utils.Result;
@@ -14,14 +14,14 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
-public class UserLoginController {
+public class UserController {
     @Resource
-    private UserLoginService userLoginService;
+    private UserService userService;
 
     @PostMapping("/login")
     public Result<String> loginController(@RequestBody User loginUser, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        Boolean loginResult = userLoginService.loginService(loginUser.getUserName(), loginUser.getPassword());
+        Boolean loginResult = userService.loginService(loginUser.getUserName(), loginUser.getPassword());
 
         if(loginResult){
             HttpSession session = request.getSession();
@@ -35,7 +35,7 @@ public class UserLoginController {
 
     @PostMapping("/register")
     public Result<String> registerController(@RequestBody User newUser, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Boolean registerResult = userLoginService.registerService(newUser);
+        Boolean registerResult = userService.registerService(newUser);
         if (registerResult) {
             HttpSession session = request.getSession();
             session.setAttribute("LoginUser", newUser.getUserName());
@@ -57,7 +57,7 @@ public class UserLoginController {
     @GetMapping("/getUserName")
     public Result<String> getUserName(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Object userName = session.getAttribute("LoginUser");
-        User user = userLoginService.getUserByName(userName.toString());
+        User user = userService.getUserByName(userName.toString());
         return user == null
                 ? Result.error(401, "User Not Found", response)
                 : Result.success(user.getUserName(), "成功");
