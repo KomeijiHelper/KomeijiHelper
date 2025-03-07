@@ -14,9 +14,12 @@
     </div>
 
     <!-- 登录按钮 -->
-    <router-link v-else to="/login" class="user-icon">
-      <i class="fas fa-sign-in-alt"></i>
-    </router-link>
+    <div class="user-dropdown" v-else>
+      <router-link to="/login" class="user-icon">
+        <i class="fas fa-sign-in-alt"></i>
+      </router-link>
+    </div>
+
   </nav>
   <router-view></router-view>
 </template>
