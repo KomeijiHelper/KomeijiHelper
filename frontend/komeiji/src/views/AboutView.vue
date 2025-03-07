@@ -21,16 +21,13 @@ const handleButtonClick1 = async () => {
   }
 };
 
-const userId = ref('')
-onMounted(async () => {
-  userId.value = await userApi.getUserName()
-});
+
 
 </script>
 
 <template>
   <div>
-    <h1>About {{userId}}</h1>
+    <h1>About</h1>
     <button @click="handleButtonClick">Call API</button> <!-- 添加按钮并绑定点击事件 -->
     <button @click="handleButtonClick1">Call Test</button>
   </div>

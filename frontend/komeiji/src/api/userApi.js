@@ -48,58 +48,37 @@ export default {
             userName: username,
             password: password,
         };
-        return apiClient.post('/user/login', postJson);
+        const result = await apiClient.post('/user/login', postJson);
+        localStorage.setItem("userName", username)
+        return result;
     },
 
-    register(username, password) {
+    async register(username, password) {
         const postJson = {
             userName: username,
             password: password,
         };
-        return apiClient.post('/user/register', postJson);
-    },
-
-    async getUserName() {
-        const result = apiClient.get('/user/getUserName');
-        let userName = '';
-        await result.then((response) => {
-            userName = response.data.data;
-        });
-        return userName;
+        const result = await apiClient.post('/user/register', postJson);
+        localStorage.setItem("userName", username)
+        return result;
     },
 
     test(){
         return apiClient.get('/user/test');
     },
 
-    getUsersByUserClass(userClassCode) {
+    async getUsersByUserClass(userClassCode) {
         const postJson = {
             userClassCode: userClassCode,
         };
-        return apiClient.post('/user/getUsersByClass', postJson);
+        const result = await apiClient.post('/user/getUsersByClass', postJson);
+        return result;
     },
 
-    getUsers() {
-        return apiClient.get('/users');
-    },
-
-    // 获取单个用户
-    getUser(id) {
-        return apiClient.get(`/users/${id}`);
-    },
-
-    // 创建用户
-    createUser(userData) {
-        return apiClient.post('/users', userData);
-    },
-
-    // 更新用户
-    updateUser(id, userData) {
-        return apiClient.put(`/users/${id}`, userData);
-    },
-
-    // 删除用户
-    deleteUser(id) {
-        return apiClient.delete(`/users/${id}`);
+    async checkSession() {
+        const result = await apiClient.get('/user/checkSession');
+        if (!result) {
+            localStorage.removeItem('userName');
+        }
     },
 };

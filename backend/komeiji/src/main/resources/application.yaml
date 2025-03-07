@@ -10,7 +10,7 @@ spring:
     name: back
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: 123
+    password: 1234
     url: jdbc:mysql://localhost:3306/komeiji?serverTimezone=UTC
     username: root
   jpa:
