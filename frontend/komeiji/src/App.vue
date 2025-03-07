@@ -124,11 +124,14 @@ function logout() {
 /* 用户头像 */
 .user-dropdown {
   position: absolute;
-  right: 20px;
+  top: 10px;
+  right: 0;
   cursor: pointer;
 }
 
 .user-icon {
+  position: absolute;
+  right: 20px;
   width: 40px;
   height: 40px;
   background-color: #007bff;
