@@ -35,14 +35,14 @@ const dropdownOpen = ref(false);
 watch(
     () => route.path,
     (newPath) => {
-      if (newPath === "/login") return;
+      if (newPath === "/login" || newPath === "/") return;
       handleRouteChange();
     }
 );
 
-function handleRouteChange() {
+async function handleRouteChange() {
   try {
-    userApi.checkSession();
+    await userApi.checkSession();
     loggedIn.value = true;
   } catch (e) {
     loggedIn.value = false;
@@ -123,8 +123,8 @@ function logout() {
 
 /* 用户头像 */
 .user-dropdown {
-  position: relative;
-  margin-left: auto;
+  position: absolute;
+  right: 20px;
   cursor: pointer;
 }
 
