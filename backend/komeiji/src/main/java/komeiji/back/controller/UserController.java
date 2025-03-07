@@ -56,6 +56,7 @@ public class UserController {
     public String test() { return "test"; }
 
     @GetMapping("/getUserName")
+    // TODO: Delete this func
     public Result<String> getUserName(HttpSession session, HttpServletResponse response) throws IOException {
         Object userName = session.getAttribute("LoginUser");
         User user = userService.getUserByName(userName.toString());
