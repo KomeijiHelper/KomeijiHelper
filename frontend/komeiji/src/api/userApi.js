@@ -15,13 +15,6 @@ apiClient.interceptors.response.use((response) => {
 }, async (error) => {
     if (error.response) {
         switch (error.response.status) {
-            case 401:
-            {
-                alert('会话失效，跳转到登录页');
-                localStorage.removeItem('session');
-                await router.push('/login');
-                break;
-            }
             case 402:
             {
                 alert("用户名或密码错误");
@@ -76,9 +69,11 @@ export default {
     },
 
     async checkSession() {
-        const result = await apiClient.get('/user/checkSession');
-        if (!result) {
-            localStorage.removeItem('userName');
-        }
+        await apiClient.get('/user/checkSession')
+        return true;
     },
+
+    async logout() {
+        await apiClient.get('/user/logout');
+    }
 };
