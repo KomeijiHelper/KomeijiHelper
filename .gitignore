@@ -66,3 +66,4 @@ target/
 
 # vscode
 .vscode/
+backend/komeiji/src/main/resources/application-local.yaml
