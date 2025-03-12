@@ -22,4 +22,5 @@
 
 在`DefaultTextFrameProtocol`中规定了文本流为形如`{"type":xxx,"content":xxx}`的json
 在转发消息时也需要实现对应的`Message`具体类`TextMessage`
-以及转发时的具体操作`MessageHandler`
+以及转发时的该如何解码消息实际发送到WebSocket channel中的内容`messageDecode`,
+`TextMessage`中返回同user1.html中相同的json包
