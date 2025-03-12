@@ -12,8 +12,8 @@ spring:
     name: back
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: ${DB_PASSWORD}
-    url: jdbc:mysql://localhost:3306/komeiji?serverTimezone=UTC
+    password: 2002madlife
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC
     username: root
   jpa:
     generate-ddl: true
