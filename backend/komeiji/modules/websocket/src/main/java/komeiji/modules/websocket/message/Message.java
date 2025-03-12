@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 @Data
-public abstract class Message implements MessageHandler {
+public abstract class Message {
     private SessionToken from;
     private SessionToken to;
 
@@ -15,4 +15,6 @@ public abstract class Message implements MessageHandler {
         this.to = to;
     }
 
+    // We need to decode by ourselves the content send to Websocket channel
+    public abstract Object messageDecode();
 }

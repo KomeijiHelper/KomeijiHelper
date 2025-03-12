@@ -10,7 +10,7 @@
     //判断当前浏览器是否支持websocket
     if(window.WebSocket) {
         //go on
-        socket = new WebSocket("ws://localhost:54950/chat?from=test2&to=test2");
+        socket = new WebSocket("ws://localhost:54950/chat?from=test2&to=test1");
         //相当于channelReado, ev 收到服务器端回送的消息
         socket.onmessage = function (ev) {
             var rt = document.getElementById("responseText");
@@ -40,7 +40,8 @@
         }
         if(socket.readyState === WebSocket.OPEN) {
             //通过socket 发送消息
-            socket.send(message)
+            let msg = {type:'text',content:message}
+            socket.send(JSON.stringify(msg))
         } else {
             alert("连接没有开启");
         }

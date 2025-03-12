@@ -29,6 +29,7 @@ public class HandShakeCompleteEventHandler implements EventHandler {
         String uri = handshakeComplete.requestUri();
         System.out.println(uri);
         try {
+            // TODO: generate subclass of Session based on uri
             Session session = new OneWaySession(uri,ctx.channel());
             ctx.channel().attr(Attributes.SESSION).set(session);
             WebSocketServer.getWebSocketSingleServer()

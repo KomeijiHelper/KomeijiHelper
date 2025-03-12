@@ -1,7 +1,10 @@
 package komeiji.modules.websocket.message.fowardqueue.impl;
 
+import komeiji.modules.websocket.WebSocketServer;
 import komeiji.modules.websocket.message.Message;
 import komeiji.modules.websocket.message.fowardqueue.MessageForwardQueue;
+import komeiji.modules.websocket.session.Session;
+import komeiji.modules.websocket.session.SessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +25,10 @@ public class CLMessageQueue implements MessageForwardQueue {
         if (msg == null) {
             return;
         }
-        // TODO: send message really
         System.out.println("sendMessage called: \n"+msg);
+        Object content = msg.messageDecode();
+        Session targetSession = WebSocketServer.getWebSocketSingleServer().getSessionManager().findSession(msg.getTo());
+        targetSession.getConnect().writeAndFlush(content);
     }
 
     @Override

@@ -20,4 +20,10 @@ public class BinaryMessage extends Message {
         this(from, to);
         this.data = data;
     }
+
+    @Override
+    public Object messageDecode() {
+        // TODO:
+        return null;
+    }
 }
