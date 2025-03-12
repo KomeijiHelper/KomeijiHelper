@@ -79,7 +79,16 @@ public class UserController {
 
     public static class UserClassRequest {
         private int userClassCode;
+
+        public int getUserClassCode() {
+            return userClassCode;
+        }
+
+        public void setUserClassCode(int userClassCode) {
+            this.userClassCode = userClassCode;
+        }
     }
+
 
     @GetMapping("/checkSession")
     public Boolean checkSession() {

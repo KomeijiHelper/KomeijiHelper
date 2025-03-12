@@ -1,7 +1,6 @@
 import axios from 'axios';
 import router from "@/router/index.js";
 
-// 创建 axios 实例
 const apiClient = axios.create({
     baseURL: 'http://127.0.0.1:8081', // 基础 URL
     headers: {
@@ -64,8 +63,7 @@ export default {
         const postJson = {
             userClassCode: userClassCode,
         };
-        const result = await apiClient.post('/user/getUsersByClass', postJson);
-        return result;
+        return await apiClient.post('/user/getUsersByClass', postJson);
     },
 
     async checkSession() {
