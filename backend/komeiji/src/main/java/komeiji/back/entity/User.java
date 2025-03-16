@@ -1,17 +1,27 @@
 package komeiji.back.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 @Table(name = "user")
 @Entity
+@Schema(name = "User", description = "用户实体类")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "用户ID",example = "1")
     private long id;
 
+    @Schema(description = "用户名",example = "admin",required = true)
     private String userName;
+
+    @Schema(description = "密码",example = "123456",required = true)
     private String password;
+
+    @Schema(description = "用户类别",example = "0")
     private UserClass userClass = UserClass.Normal;
+
+    @Schema(description = "邮箱",example = "admin@example.com")
     private String email;
 
     public long getId() {

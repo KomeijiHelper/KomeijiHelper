@@ -17,6 +17,9 @@ public class IntercreptorConfig implements WebMvcConfigurer {
         excludeUrls.add("/**/login");
         excludeUrls.add("/**/logout");
         excludeUrls.add("/**/register");
+        excludeUrls.add("/swagger-ui/**");
+        excludeUrls.add("/swagger-ui.html/**");
+        excludeUrls.add("/v3/api-docs/**");
         registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns(excludeUrls);
     }
 }

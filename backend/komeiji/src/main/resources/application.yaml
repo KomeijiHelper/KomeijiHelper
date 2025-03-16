@@ -20,3 +20,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+swagger:
