@@ -1,7 +1,6 @@
 import axios from 'axios';
 import router from "@/router/index.js";
 
-// 创建 axios 实例
 const apiClient = axios.create({
     baseURL: 'http://127.0.0.1:8081', // 基础 URL
     headers: {
@@ -15,13 +14,6 @@ apiClient.interceptors.response.use((response) => {
 }, async (error) => {
     if (error.response) {
         switch (error.response.status) {
-            case 401:
-            {
-                alert('会话失效，跳转到登录页');
-                localStorage.removeItem('session');
-                await router.push('/login');
-                break;
-            }
             case 402:
             {
                 alert("用户名或密码错误");
@@ -48,58 +40,38 @@ export default {
             userName: username,
             password: password,
         };
-        return apiClient.post('/user/login', postJson);
+        const result = await apiClient.post('/user/login', postJson);
+        localStorage.setItem("userName", username)
+        return result;
     },
 
-    register(username, password) {
+    async register(username, password) {
         const postJson = {
             userName: username,
             password: password,
         };
-        return apiClient.post('/user/register', postJson);
-    },
-
-    async getUserName() {
-        const result = apiClient.get('/user/getUserName');
-        let userName = '';
-        await result.then((response) => {
-            userName = response.data.data;
-        });
-        return userName;
+        const result = await apiClient.post('/user/register', postJson);
+        localStorage.setItem("userName", username)
+        return result;
     },
 
     test(){
         return apiClient.get('/user/test');
     },
 
-    getUsersByUserClass(userClassCode) {
+    async getUsersByUserClass(userClassCode) {
         const postJson = {
             userClassCode: userClassCode,
         };
-        return apiClient.post('/user/getUsersByClass', postJson);
+        return await apiClient.post('/user/getUsersByClass', postJson);
     },
 
-    getUsers() {
-        return apiClient.get('/users');
+    async checkSession() {
+        await apiClient.get('/user/checkSession')
+        return true;
     },
 
-    // 获取单个用户
-    getUser(id) {
-        return apiClient.get(`/users/${id}`);
-    },
-
-    // 创建用户
-    createUser(userData) {
-        return apiClient.post('/users', userData);
-    },
-
-    // 更新用户
-    updateUser(id, userData) {
-        return apiClient.put(`/users/${id}`, userData);
-    },
-
-    // 删除用户
-    deleteUser(id) {
-        return apiClient.delete(`/users/${id}`);
-    },
+    async logout() {
+        await apiClient.get('/user/logout');
+    }
 };

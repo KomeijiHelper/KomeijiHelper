@@ -42,8 +42,7 @@ const handleLogin = async () => {
     await userApi.login(username, password)
     websocket_login = new WebSocket('ws://localhost:8081/login/'+ username);
   }
-
-  await router.push("/about");
+  window.location.reload();
 };
 </script>
 

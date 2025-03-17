@@ -1,12 +1,10 @@
 <script setup>
-import userApi from "@/api/userApi.js";
 
-userApi.getUserName();
 </script>
 
 <template>
   <div>
-    <h1>About</h1>
+    <h1>Home</h1>
   </div>
 </template>
 
