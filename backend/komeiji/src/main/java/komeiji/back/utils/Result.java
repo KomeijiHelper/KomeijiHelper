@@ -1,13 +1,19 @@
 package komeiji.back.utils;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+@Schema(name = "CommonResult", description = "通用返回对象")
 public class Result<T> {
+    @Schema(description = "返回码",example = "200")
     private String code;
+
+    @Schema(description = "返回信息",example = "成功")
     private String msg;
 
+    @Schema(description = "返回数据",example = "xxxxx")
     private T data;
 
     public String getCode() {
@@ -43,21 +49,21 @@ public class Result<T> {
 
     public static Result success() {
         Result result = new Result<>();
-        result.setCode("0");
+        result.setCode("200");
         result.setMsg("成功");
         return result;
     }
 
     public static <T> Result<T> success(T data) {
         Result<T> result = new Result<>(data);
-        result.setCode("0");
+        result.setCode("200");
         result.setMsg("成功");
         return result;
     }
 
     public static <T> Result<T> success(T data,String msg) {
         Result<T> result = new Result<>(data);
-        result.setCode("0");
+        result.setCode("200");
         result.setMsg(msg);
         return result;
     }
