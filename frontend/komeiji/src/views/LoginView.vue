@@ -29,8 +29,6 @@ const handleLogin = async () => {
   const username = usernameRef.valueOf().value.getValue();
   const password = passwordRef.valueOf().value.getValue();
 
-  var websocket_login = null;
-
   if (!username || !password) {
     alert("请输入用户名和密码！");
     return;
@@ -40,7 +38,6 @@ const handleLogin = async () => {
     await userApi.register(username, password)
   } else {
     await userApi.login(username, password)
-    websocket_login = new WebSocket('ws://localhost:8081/login/'+ username);
   }
   window.location.reload();
 };
