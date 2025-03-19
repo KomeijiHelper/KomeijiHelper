@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpSession;
 import komeiji.back.entity.UserClass;
 import komeiji.back.service.UserService;
 import komeiji.back.entity.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
 import komeiji.back.utils.Result;
 import jakarta.annotation.Resource;
@@ -115,18 +117,12 @@ public class UserController {
     }
 
 
+    @Setter
+    @Getter
     @Schema(description = "用户类别请求参数")
     public static class UserClassRequest {
         @Schema(description = "用户类别代码", example = "Normal")
         private int userClassCode;
-
-        public int getUserClassCode() {
-            return userClassCode;
-        }
-
-        public void setUserClassCode(int userClassCode) {
-            this.userClassCode = userClassCode;
-        }
     }
 
     @GetMapping("/checkSession")

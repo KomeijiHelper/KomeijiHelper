@@ -8,10 +8,10 @@
     </div>
     <div v-else class="consultant-list">
       <div v-for="consultant in consultants" 
-           :key="consultant.id" 
+           :key="consultant"
            class="consultant-card"
-           @click="selectConsultant(consultant.id)">
-        <h3>咨询师 {{ consultant.id }}</h3>
+           @click="selectConsultant(consultant)">
+        <h3>咨询师 {{ consultant }}</h3>
       </div>
     </div>
   </div>
