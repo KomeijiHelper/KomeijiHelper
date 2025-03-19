@@ -4,6 +4,7 @@ import LoginView from "@/views/LoginView.vue";
 import AboutView from "@/views/AboutView.vue";
 import HomeView from "@/views/HomeView.vue";
 import SelectConsultant from "@/views/SelectConsultant.vue";
+import ConsultantDashboard from "@/views/ConsultantDashboard.vue";
 
 const routes = [
     {
@@ -25,6 +26,11 @@ const routes = [
         path: "/select-consultant",
         name: "SelectConsultant",
         component: SelectConsultant,
+    },
+    {
+        path: "/consultant-dashboard",
+        name: "ConsultantDashboard",
+        component: ConsultantDashboard,
     },
 ];
 
