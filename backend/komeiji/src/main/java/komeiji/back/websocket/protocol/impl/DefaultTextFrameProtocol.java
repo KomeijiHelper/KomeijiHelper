@@ -3,6 +3,7 @@ package komeiji.back.websocket.protocol.impl;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import komeiji.back.websocket.message.Message;
 import komeiji.back.websocket.message.MessageFactory;
 import komeiji.back.websocket.message.MessageType;
 import komeiji.back.websocket.message.impl.TextMessage;
@@ -28,10 +29,10 @@ class MessageBody {
     }
 }
 
-public class DefaultTextFrameProtocol extends TextFrameProtocol<TextMessage> {
+public class DefaultTextFrameProtocol extends TextFrameProtocol<Message> {
 
     @Override
-    public TextMessage frameTransform(TextWebSocketFrame frame, Session session) {
+    public Message frameTransform(TextWebSocketFrame frame, Session session) {
         String text = frame.text();
         System.out.println(text);
 

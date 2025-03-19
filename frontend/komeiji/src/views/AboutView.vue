@@ -13,7 +13,7 @@ const handleButtonClick = async () => {
 
 const handleButtonClick1 = async () => {
   try {
-    const response = await userApi.test(); // 调用 userApi.test 方法
+    const response = await userApi.test();
     console.log(response);
   } catch (error) {
     console.error('Error calling test API:', error); // 处理错误
@@ -27,7 +27,7 @@ const handleButtonClick1 = async () => {
 <template>
   <div>
     <h1>About</h1>
-    <button @click="handleButtonClick">Call API</button> <!-- 添加按钮并绑定点击事件 -->
+    <button @click="handleButtonClick">Call API</button>
     <button @click="handleButtonClick1">Call Test</button>
   </div>
 </template>
