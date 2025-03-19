@@ -34,7 +34,8 @@ export default {
   },
   methods: {
     setupWebSocket() {
-      this.ws = new WebSocket('ws://127.0.0.1:8081/ws/consultant')
+      const id = localStorage.getItem('userName');
+      this.ws = new WebSocket('ws://127.0.0.1:54950/ws?uid='+id)
       
       this.ws.onopen = () => {
         console.log('WebSocket连接已建立')
