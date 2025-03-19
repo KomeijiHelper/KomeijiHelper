@@ -1,7 +1,12 @@
 <template>
   <div class="select-consultant">
     <h2>选择咨询师</h2>
-    <div class="consultant-list">
+    <div v-if="waitingForConfirm" class="waiting-message">
+      <div class="spinner"></div>
+      <p>等待咨询师确认...</p>
+      <button @click="cancelRequest" class="cancel-btn">取消请求</button>
+    </div>
+    <div v-else class="consultant-list">
       <div v-for="consultant in consultants" 
            :key="consultant.id" 
            class="consultant-card"
@@ -19,7 +24,10 @@ export default {
   name: 'SelectConsultant',
   data() {
     return {
-      consultants: []
+      consultants: [],
+      waitingForConfirm: false,
+      currentConsultantId: null,
+      ws: null
     }
   },
   async created() {
@@ -34,14 +42,61 @@ export default {
   methods: {
     async selectConsultant(consultantId) {
       try {
+        this.waitingForConfirm = true
+        this.currentConsultantId = consultantId
         await userApi.selectConsultant(consultantId)
-        alert('选择咨询师成功')
-        // 选择成功后跳转到其他页面
-        this.$router.push('/dashboard')
+        this.setupWebSocket()
       } catch (error) {
         console.error('选择咨询师失败:', error)
         alert('选择咨询师失败')
+        this.waitingForConfirm = false
       }
+    },
+    setupWebSocket() {
+      this.ws = new WebSocket('ws://127.0.0.1:8081/ws/consultant')
+      
+      this.ws.onopen = () => {
+        console.log('WebSocket连接已建立')
+        // 发送咨询师ID
+        this.ws.send(JSON.stringify({
+          type: 'CONSULTANT_REQUEST',
+          consultantId: this.currentConsultantId
+        }))
+      }
+
+      this.ws.onmessage = (event) => {
+        const data = JSON.parse(event.data)
+        if (data.type === 'CONSULTANT_ACCEPTED') {
+          alert('咨询师已接受请求')
+          this.$router.push('/chat')
+        } else if (data.type === 'CONSULTANT_REJECTED') {
+          alert('咨询师已拒绝请求')
+          this.waitingForConfirm = false
+        }
+      }
+
+      this.ws.onerror = (error) => {
+        console.error('WebSocket错误:', error)
+        alert('连接错误')
+        this.waitingForConfirm = false
+      }
+
+      this.ws.onclose = () => {
+        console.log('WebSocket连接已关闭')
+        this.waitingForConfirm = false
+      }
+    },
+    cancelRequest() {
+      if (this.ws) {
+        this.ws.close()
+      }
+      this.waitingForConfirm = false
+      this.currentConsultantId = null
+    }
+  },
+  beforeUnmount() {
+    if (this.ws) {
+      this.ws.close()
     }
   }
 }
@@ -81,5 +136,40 @@ h2 {
 h3 {
   margin: 0;
   color: #666;
+}
+
+.waiting-message {
+  text-align: center;
+  padding: 40px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 20px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.cancel-btn {
+  margin-top: 20px;
+  padding: 8px 16px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-btn:hover {
+  background-color: #cc0000;
 }
 </style> 
