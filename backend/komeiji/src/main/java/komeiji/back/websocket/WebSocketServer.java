@@ -10,10 +10,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
-import komeiji.back.websocket.channel.handlers.BinaryMessageHandler;
-import komeiji.back.websocket.channel.handlers.MessageForwardHandler;
-import komeiji.back.websocket.channel.handlers.TextMessageHandler;
-import komeiji.back.websocket.channel.handlers.WebSocketConnectHandler;
+import komeiji.back.websocket.channel.handlers.*;
 import komeiji.back.websocket.message.fowardqueue.MessageForwardQueue;
 import komeiji.back.websocket.session.SessionManager;
 import lombok.Getter;
@@ -50,6 +47,8 @@ public class WebSocketServer {
     private final EventLoopGroup bossGroup;
     private final EventLoopGroup workerGroup;
     private final EventLoopGroup msgForwardGroup;
+    @Getter
+    private final String url;
 
     @Getter
     private final MessageForwardQueue messageForwardQueue;
@@ -65,6 +64,7 @@ public class WebSocketServer {
        this.msgForwardGroup = new DefaultEventLoopGroup();
        this.sessionManager = sessionManager;
        this.messageForwardQueue = messageForwardQueue;
+       this.url = url;
        InitServer(logLevel,httpMaxContentLength,url);
     }
 
@@ -84,6 +84,7 @@ public class WebSocketServer {
 
                             pipeline.addLast(new WebSocketServerProtocolHandler(url,true));
                             pipeline.addLast(new WebSocketConnectHandler());
+                            pipeline.addLast(new FrameProtocolHandler());
                             pipeline.addLast(new TextMessageHandler());
                             pipeline.addLast(new BinaryMessageHandler());
                             pipeline.addLast(msgForwardGroup,new MessageForwardHandler());
@@ -94,7 +95,7 @@ public class WebSocketServer {
     public void startServer(int port) {
         try {
             msgForwardGroup.scheduleAtFixedRate(()->{
-                logger.info("Calling schedule forward");
+                logger.debug("Calling schedule forward");
                 messageForwardQueue.sendMessage();
             },0,MESSAGE_FORWARD_INTERVAL,TimeUnit.SECONDS);
             ChannelFuture future = bootstrap.bind(port).sync();

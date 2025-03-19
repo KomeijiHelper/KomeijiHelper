@@ -16,4 +16,10 @@ public class BinaryMessageHandler extends SimpleChannelInboundHandler<BinaryMess
         logger.debug("handler text message: {}",msg);
         ctx.fireUserEventTriggered(new MessageForwardEvent(msg));
     }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("异常发生 " + cause.getMessage() + BinaryMessageHandler.class.getName());
+        super.exceptionCaught(ctx, cause);
+    }
 }

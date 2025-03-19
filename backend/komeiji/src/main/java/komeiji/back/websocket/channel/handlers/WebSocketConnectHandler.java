@@ -25,18 +25,10 @@ public class WebSocketConnectHandler extends ChannelInboundHandlerAdapter {
         Session session = ctx.channel().attr(Attributes.SESSION).get();
         System.out.println("channelDisconnect from: " + session.getId());
         WebSocketServer.getWebSocketSingleServer().getSessionManager().removeSession(session);
-        // TODO: 关闭对应的另一个channel，并持久化聊天记录
+        // TODO: 关闭对应的另一个channel，并持久化聊天记录， 此处的逻辑可能需要迁移到其他地方实现
         super.channelUnregistered(ctx);
     }
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        assert session != null;
-        WebSocketFrame frame = (WebSocketFrame) msg;
-        WebSocketFrameProtocol<?> protocol = ProtocolUtils.getProtocols(frame.getClass());
-        Object parsedMsg = protocol.transform(frame,session);
-        ctx.fireChannelRead(parsedMsg);
-    }
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
@@ -49,6 +41,9 @@ public class WebSocketConnectHandler extends ChannelInboundHandlerAdapter {
         super.userEventTriggered(ctx, evt);
     }
 
-
-
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("exceptionCaught: " + cause.getMessage() + WebSocketConnectHandler.class.getName());
+        super.exceptionCaught(ctx, cause);
+    }
 }
