@@ -79,6 +79,6 @@ export default {
         const postJson = {
             consultantId: consultantId,
         };
-        return await apiClient.post('/user/selectConsultant', postJson);
+        return await apiClient.post('/consultant/select', postJson);
     }
 };

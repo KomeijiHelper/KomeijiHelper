@@ -33,7 +33,7 @@ export default {
   async created() {
     try {
       const response = await userApi.getUsersByUserClass(1)
-      this.consultants = response.data
+      this.consultants = response.data.data
     } catch (error) {
       console.error('获取咨询师列表失败:', error)
       alert('获取咨询师列表失败')
