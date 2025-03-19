@@ -73,5 +73,12 @@ export default {
 
     async logout() {
         await apiClient.get('/user/logout');
+    },
+
+    async selectConsultant(consultantId) {
+        const postJson = {
+            consultantId: consultantId,
+        };
+        return await apiClient.post('/user/selectConsultant', postJson);
     }
 };
