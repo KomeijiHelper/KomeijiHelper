@@ -19,7 +19,7 @@ public class ConsultantService {
         // 发送WebSocket消息给咨询师
         Session consultantSession = WebSocketServer.getWebSocketSingleServer()
             .getSessionManager()
-            .findSession(new SessionToken(consultantId));
+            .findChatSession(new SessionToken(consultantId));
             
         if (consultantSession != null) {
             consultantSession.getConnect().writeAndFlush(

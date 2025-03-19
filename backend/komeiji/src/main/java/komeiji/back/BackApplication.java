@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BackApplication {
     public static void main(String[] args) {
         SpringApplication.run(BackApplication.class, args);
-        WebSocketServer webSocketServer = WebSocketServer.getWebSocketSingleServer(LogLevel.INFO,8192,"/chat",
+        WebSocketServer webSocketServer = WebSocketServer.getWebSocketSingleServer(LogLevel.INFO,8192,"/ws",
                 new SessionManager(new DefaultChannelGroup(GlobalEventExecutor.INSTANCE)),
                 new CLMessageQueue());
         webSocketServer.startServer(54950);

@@ -29,7 +29,7 @@ public class CLMessageQueue implements MessageForwardQueue {
         Message msg = queue.poll();
         System.out.println("sendMessage called: \n"+msg);
         Object content = msg.messageDecode();
-        Session targetSession = WebSocketServer.getWebSocketSingleServer().getSessionManager().findSession(msg.getTo());
+        Session targetSession = WebSocketServer.getWebSocketSingleServer().getSessionManager().findChatSession(msg.getTo());
         conversationManager.addMessageRecord(msg);
         targetSession.getConnect().writeAndFlush(content);
     }

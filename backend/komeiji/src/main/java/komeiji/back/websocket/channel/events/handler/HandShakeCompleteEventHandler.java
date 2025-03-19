@@ -4,8 +4,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import komeiji.back.websocket.WebSocketServer;
 import komeiji.back.websocket.channel.Attributes;
-import komeiji.back.websocket.session.OneWaySession;
 import komeiji.back.websocket.session.Session;
+import komeiji.back.websocket.session.SessionBuilder;
 
 
 public class HandShakeCompleteEventHandler implements EventHandler {
@@ -29,8 +29,7 @@ public class HandShakeCompleteEventHandler implements EventHandler {
         String uri = handshakeComplete.requestUri();
         System.out.println(uri);
         try {
-            // NOTE: 该模块只用于连接建立之后的聊天，根据需求此处只需要使用OneWaySession
-            Session session = new OneWaySession(uri,ctx.channel());
+            Session session = SessionBuilder.createSession(uri,ctx.channel());
             ctx.channel().attr(Attributes.SESSION).set(session);
             WebSocketServer.getWebSocketSingleServer()
                     .getSessionManager().addSession(session);
