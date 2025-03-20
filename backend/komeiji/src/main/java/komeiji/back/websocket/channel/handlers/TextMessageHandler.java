@@ -20,8 +20,8 @@ public class TextMessageHandler extends SimpleChannelInboundHandler<TextMessage>
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx,TextMessage  msg) throws Exception {
-        ctx.fireChannelRead(new MessageForwardEvent(msg));
         // NOTE: message has been parsed by Protocol here
+        ctx.fireUserEventTriggered(new MessageForwardEvent(msg));
 //        String text = msg.getData();
 //        System.out.println("服务器收到消息 " + text);
 //

@@ -24,7 +24,7 @@ public class ConsultantService {
         if (consultantSession != null) {
             consultantSession.getConnect().writeAndFlush(
                 MessageFactory.newTextMessage(
-                    MessageType.CONSULTANT_REQUEST,
+                    MessageType.CHAT_REQUEST,
                     new SessionToken(userId),
                     new SessionToken(consultantId),
                     userId

@@ -12,8 +12,8 @@ import java.util.Map;
 @Setter
 @Getter
 public class TextMessage extends Message {
-    private static Gson gson = new Gson();
-    private String data;
+    protected static Gson gson = new Gson();
+    protected String data;
 
     public TextMessage(SessionToken from, SessionToken to) {
         super(from,to);

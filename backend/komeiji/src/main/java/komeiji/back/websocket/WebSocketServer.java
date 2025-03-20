@@ -85,8 +85,13 @@ public class WebSocketServer {
                             pipeline.addLast(new WebSocketServerProtocolHandler(url,true));
                             pipeline.addLast(new WebSocketConnectHandler());
                             pipeline.addLast(new FrameProtocolHandler());
+
+                            // handlers for different types of message
                             pipeline.addLast(new TextMessageHandler());
                             pipeline.addLast(new BinaryMessageHandler());
+                            pipeline.addLast(new NotifyMessageHandler());
+
+                            // message forward
                             pipeline.addLast(msgForwardGroup,new MessageForwardHandler());
                         }
                     });

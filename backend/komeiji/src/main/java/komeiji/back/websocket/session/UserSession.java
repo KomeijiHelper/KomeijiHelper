@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 public class UserSession implements Session{
-    private static Logger logger = LoggerFactory.getLogger(OneWaySession.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserSession.class);
 
     private SessionToken userId;
-    private Channel channel;
+    private final Channel channel;
     @Getter
     private SessionToken targetId;
 
@@ -62,5 +62,10 @@ public class UserSession implements Session{
     @Override
     public SessionToken getTarget() {
         return targetId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("UserSession{id=%s}", userId);
     }
 }

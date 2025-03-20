@@ -21,12 +21,24 @@ public class SessionManager {
     }
 
     /**
+     * 在chatSessions和userSessions中查找
+     * @return 查找到的Session，如果都不在返回null
+     */
+    public Session findSession(SessionToken sessionToken) {
+        // find in userSessions firstly
+        Session session = userSessions.get(sessionToken);
+        if (session == null) {
+            session = chatSessions.get(sessionToken);
+        }
+        return session;
+    }
+    /**
      * Session的添加在WebSocketConnectHandler里面，此处不知道具体Session是哪一类，需要在该方法中确定并存储到对应的Map中
      * removeSession方法同理
      */
     public void addSession(Session session){
         channels.add(session.getConnect());
-        if (session instanceof OneWaySession) {
+        if (session instanceof OneWayChatSession) {
             chatSessions.put(session.getId(),session);
         }
         else if (session instanceof UserSession) {
@@ -38,7 +50,7 @@ public class SessionManager {
     }
 
     public void removeSession(Session session){
-        if (session instanceof OneWaySession) {
+        if (session instanceof OneWayChatSession) {
             chatSessions.remove(session.getId());
         }
         else if (session instanceof UserSession) {
@@ -51,7 +63,7 @@ public class SessionManager {
     }
 
     public void removeChatSession(Session session){
-        assert session instanceof OneWaySession;
+        assert session instanceof OneWayChatSession;
         chatSessions.remove(session.getId());
         // auto remove channel when disconnect channel
     }
