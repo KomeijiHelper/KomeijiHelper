@@ -1,8 +1,8 @@
 package komeiji.back.websocket.session;
+
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.QueryStringDecoder;
 import lombok.Getter;
-import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,12 +10,11 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
-@Setter
-public final class OneWaySession implements Session {
-    private static Logger logger = LoggerFactory.getLogger(OneWaySession.class);
+public class UserSession implements Session{
+    private static final Logger logger = LoggerFactory.getLogger(UserSession.class);
 
     private SessionToken userId;
-    private Channel channel;
+    private final Channel channel;
     @Getter
     private SessionToken targetId;
 
@@ -26,20 +25,20 @@ public final class OneWaySession implements Session {
         QueryStringDecoder decoder = new QueryStringDecoder(url);
         Map<String, List<String>> parameters = decoder.parameters();
 
-        if (!parameters.containsKey("from") || !parameters.containsKey("to")){
+        if (!parameters.containsKey("id") ){
             throw new ParseException("invalid parameters", 0);
         }
 
-        if (parameters.get("from").isEmpty() || parameters.get("to").isEmpty()) {
+        if (parameters.get("id").isEmpty()) {
             throw new ParseException("empty parameters", 0);
         }
 
-        userId = new SessionToken(parameters.get("from").get(0));
-        targetId = new SessionToken(parameters.get("to").get(0));
+        userId = new SessionToken(parameters.get("id").get(0));
+        targetId = new SessionToken(parameters.get("id").get(0));
     }
 
 
-    public OneWaySession(String url,Channel channel) {
+    public UserSession(String url,Channel channel) {
         try {
             parseUrl(url);
             this.channel = channel;
@@ -63,5 +62,10 @@ public final class OneWaySession implements Session {
     @Override
     public SessionToken getTarget() {
         return targetId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("UserSession{id=%s}", userId);
     }
 }

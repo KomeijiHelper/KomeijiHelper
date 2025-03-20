@@ -14,4 +14,10 @@ public class MessageForwardHandler extends ChannelInboundHandlerAdapter  {
             eventHandler.handlerEvent(ctx);
         }
     }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("异常发生 " + cause.getMessage() + MessageForwardHandler.class.getName());
+        super.exceptionCaught(ctx, cause);
+    }
 }

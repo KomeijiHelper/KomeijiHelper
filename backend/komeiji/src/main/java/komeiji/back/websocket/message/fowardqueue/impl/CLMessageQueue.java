@@ -27,10 +27,18 @@ public class CLMessageQueue implements MessageForwardQueue {
             return;
         }
         Message msg = queue.poll();
-        System.out.println("sendMessage called: \n"+msg);
-        Object content = msg.messageDecode();
+        logger.debug("sendMessage called: {}",msg);
         Session targetSession = WebSocketServer.getWebSocketSingleServer().getSessionManager().findSession(msg.getTo());
+        if( targetSession == null ) {
+            logger.warn("target of message {} is null", msg);
+            return;
+        }
+        if( !targetSession.getConnect().isWritable()) {
+            logger.warn("channel of target {} is not writable", targetSession);
+            return;
+        }
         conversationManager.addMessageRecord(msg);
+        Object content = msg.messageDecode();
         targetSession.getConnect().writeAndFlush(content);
     }
 
