@@ -15,7 +15,7 @@ public class SessionBuilder {
         Matcher chatMatcher = chatPattern.matcher(uri);
         Matcher userMatcher = userPattern.matcher(uri);
         if(chatMatcher.matches()) {
-            return new OneWaySession(uri,channel);
+            return new OneWayChatSession(uri,channel);
         }
         else if (userMatcher.matches()) {
             return new UserSession(uri,channel);

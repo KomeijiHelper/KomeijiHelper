@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 @Setter
-public final class OneWaySession implements Session {
-    private static Logger logger = LoggerFactory.getLogger(OneWaySession.class);
+public final class OneWayChatSession implements Session {
+    private static Logger logger = LoggerFactory.getLogger(OneWayChatSession.class);
 
     private SessionToken userId;
     private Channel channel;
@@ -39,7 +39,7 @@ public final class OneWaySession implements Session {
     }
 
 
-    public OneWaySession(String url,Channel channel) {
+    public OneWayChatSession(String url, Channel channel) {
         try {
             parseUrl(url);
             this.channel = channel;
@@ -63,5 +63,10 @@ public final class OneWaySession implements Session {
     @Override
     public SessionToken getTarget() {
         return targetId;
+    }
+
+    @Override
+    public String toString() {
+       return String.format("OneWayChatSession{userId=%s, targetId=%s}", userId, targetId);
     }
 }
