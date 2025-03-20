@@ -1,5 +1,5 @@
 <template>
-  <div class="consultant-dashboard">
+  <div class="assistant-dashboard">
     <h2>咨询师工作台</h2>
     <div v-if="currentRequest" class="request-panel">
       <h3>新的咨询请求</h3>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'ConsultantDashboard',
+  name: 'AssistantDashboard',
   data() {
     return {
       ws: null,
@@ -35,20 +35,20 @@ export default {
   methods: {
     setupWebSocket() {
       const id = localStorage.getItem('userName');
-      this.ws = new WebSocket('ws://127.0.0.1:54950/ws?uid='+id)
+      this.ws = new WebSocket('ws://127.0.0.1:54950/ws?id='+id)
       
       this.ws.onopen = () => {
         console.log('WebSocket连接已建立')
         // 发送咨询师身份信息
         this.ws.send(JSON.stringify({
-          type: 'consultant_identity',
+          type: 'assistant_identity',
           content: localStorage.getItem('userId') // 假设用户ID存储在localStorage中
         }))
       }
 
       this.ws.onmessage = (event) => {
         const data = JSON.parse(event.data)
-        if (data.type === 'consultant_request') {
+        if (data.type === 'assistant_request') {
           this.currentRequest = {
             userId: data.content
           }
@@ -67,7 +67,7 @@ export default {
     handleRequest(accept) {
       if (!this.currentRequest) return
 
-      const messageType = accept ? 'consultant_accepted' : 'consultant_rejected'
+      const messageType = accept ? 'assistant_accepted' : 'assistant_rejected'
       this.ws.send(JSON.stringify({
         type: messageType,
         content: this.currentRequest.userId
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style scoped>
-.consultant-dashboard {
+.assistant-dashboard {
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
