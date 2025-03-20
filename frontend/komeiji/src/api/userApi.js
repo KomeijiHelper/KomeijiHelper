@@ -80,5 +80,9 @@ export default {
             consultantId: consultantId,
         };
         return await apiClient.post('/consultant/select', postJson);
+    },
+
+    async getUsers(){
+        return await apiClient.get('/user/getUsers');
     }
 };
