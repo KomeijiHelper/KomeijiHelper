@@ -1,8 +1,8 @@
 <template>
-  <div class="consultant-dashboard">
-    <h2>咨询师工作台</h2>
+  <div class="supervisor-dashboard">
+    <h2>督导工作台</h2>
     <div v-if="currentRequest" class="request-panel">
-      <h3>新的咨询请求</h3>
+      <h3>新的求助请求</h3>
       <p>用户ID: {{ currentRequest.userId }}</p>
       <div class="button-group">
         <button @click="handleRequest(true)" class="accept-btn">接受</button>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'ConsultantDashboard',
+  name: 'SupervisorDashboard',
   data() {
     return {
       ws: null,
@@ -35,20 +35,20 @@ export default {
   methods: {
     setupWebSocket() {
       const id = localStorage.getItem('userName');
-      this.ws = new WebSocket('ws://127.0.0.1:54950/ws?uid='+id)
-      
+      this.ws = new WebSocket('ws://127.0.0.1:54950/ws?id='+id)
+
       this.ws.onopen = () => {
         console.log('WebSocket连接已建立')
         // 发送咨询师身份信息
         this.ws.send(JSON.stringify({
-          type: 'consultant_identity',
+          type: 'supervisor_identity',
           content: localStorage.getItem('userId') // 假设用户ID存储在localStorage中
         }))
       }
 
       this.ws.onmessage = (event) => {
         const data = JSON.parse(event.data)
-        if (data.type === 'consultant_request') {
+        if (data.type === 'supervisor_request') {
           this.currentRequest = {
             userId: data.content
           }
@@ -67,7 +67,7 @@ export default {
     handleRequest(accept) {
       if (!this.currentRequest) return
 
-      const messageType = accept ? 'consultant_accepted' : 'consultant_rejected'
+      const messageType = accept ? 'supervisor_accepted' : 'supervisor_rejected'
       this.ws.send(JSON.stringify({
         type: messageType,
         content: this.currentRequest.userId
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style scoped>
-.consultant-dashboard {
+.supervisor-dashboard {
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
