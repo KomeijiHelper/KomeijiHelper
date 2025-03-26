@@ -7,7 +7,12 @@
 ## 代码规范
 
 前端：Vue, Javascript (WebStorm)
+
+**node version: 22.14.0**
+
 后端：Spring Boot, Java (IntelliJ IDEA)
+
+**java version: 17.0.11**
 
 ## 提交规范
 
